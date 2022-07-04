@@ -2,7 +2,7 @@
 import logging
 from logging import StreamHandler, Formatter, LogRecord
 import smtplib
-import telebot
+import telebot #pip install pyTelegramBotAPI
 from configparser import ConfigParser
 import os
 
