@@ -89,13 +89,18 @@ logger_config = {
         'std_format': {
             'format': '{asctime} - {levelname} - {name} - {message}',
             'style': '{'
-        }
+        },
+        'lite_format': {
+            'format': '{name} - {message}',
+            'style': '{'
+        },
     },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
             'level': 'DEBUG',
-            'formatter': 'std_format',
+            'formatter': 'lite_format',
+            # 'formatter': 'std_format',
             # 'filters': ['new_filter'],
         },
         'file': {
