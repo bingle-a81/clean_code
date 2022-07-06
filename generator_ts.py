@@ -42,13 +42,16 @@ class FileCreator(ABC):
     def get_relative_filename(self)->str:
         """Returns relative filename as str for logging"""
         relative_path_start_index=1+len(str(SRC_DIR.resolve()))
+        logger.debug(f'ff={len(str(SRC_DIR.resolve()))}')
         logger.debug(f'relative_path_start_index={relative_path_start_index}')
         result = str(self.get_absolute_filename().resolve())[relative_path_start_index:]
+        logger.debug(f'res={result}')
         return result
 
     def _create_empty_file(self):
         """Init file if not exists"""
         self.get_absolute_filename().parent.mkdir(parents=True,exist_ok=True)
+        # logger.debug(f'_create_empty_file {str(self.get_absolute_filename().parent)}')
         self.get_absolute_filename().touch(exist_ok=True)
 
     @abstractmethod
@@ -93,6 +96,7 @@ class IndexFileCreator(FileCreator):
     def _write_file_contents(self):
         current_file_contents = self.get_absolute_filename().read_text()
         if current_file_contents.strip():
+            logger.debug(f'{current_file_contents}')
             return
         self.get_absolute_filename().write_text(
             f"""export {{default}} from "./{self._element.name}";"""
@@ -131,7 +135,7 @@ class AskParams:
                 return "components"
             elif a == 'p':
                 return "pages"
-            elif (a != 'c') and (a != 'p'):
+            else:
                 print('repeat')
 
 
@@ -149,7 +153,7 @@ class AskParams:
                 return
             elif a == 'n':
                 exit("Ок, выходим, ничего не создал.")
-            elif (a != 'y') and (a != 'n'):
+            else:
                 print('repeat eee')
 
 class ElementFilesCreator:
