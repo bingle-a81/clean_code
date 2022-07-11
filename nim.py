@@ -4,6 +4,7 @@ from settings import logger_config
 import random
 from dataclasses import dataclass
 import copy
+from functools import reduce
 # from typing_extensions import TypeAlias
 # from typing import Literal
 
@@ -61,13 +62,13 @@ def check_the_victory(three_piles:dict)->bool:
 #
 def main():
     logger.debug("Start ")
-    # three_piles={}
     three_piles={k:lay_out_the_stones() for k in range(1,4)}
     logger.debug(f'three_piles={three_piles}')
     player=1
     flag=True
     while flag==True:
-        three_piles_copy=copy.deepcopy(three_piles)
+        # three_piles_copy=copy.deepcopy(three_piles)
+        sum_values=sum(three_piles.values())
         if player%2==0:
             print('Игроку 2 приготовиться!')
         else:
@@ -76,7 +77,8 @@ def main():
         logger.debug(player_attempt)
         three_piles=find_out_the_position_of_the_stones(three_piles,player_attempt)
         logger.debug(f'after change {three_piles}')
-        if any([three_piles[x] != three_piles_copy[x] for x in three_piles]):
+        if sum_values != sum(three_piles.values()):
+        # if any([three_piles[x] != three_piles_copy[x] for x in three_piles]):
             player+=1
         else:
             print('Попробуй еще раз!!')
