@@ -17,7 +17,7 @@ class Attempt:
 
 
 def lay_out_the_stones()->int:
-    ferst_pile=random.randint(1,10)
+    ferst_pile=random.randint(1,20)
     logger.debug(f'pile={ferst_pile}')
     return ferst_pile
 
